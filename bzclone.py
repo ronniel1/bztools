@@ -17,7 +17,7 @@ logger = logging.getLogger(__name__)
 logging.getLogger("__main__").setLevel(logging.INFO)
 
 
-def clonebug(bzclient, bugid, version=None):
+def clonebug(bzclient, bugid, version=None, orig_version_tag=None):
     '''Clone this bug similarly as one can do it in the webui'''
     source_bug = bzclient.getbug(bugid)
     new_description = '+++ This bug was initially created '
@@ -97,6 +97,14 @@ def clonebug(bzclient, bugid, version=None):
     bzclient._proxy.ExternalBugs.add_external_bug({
         'bug_ids': [newbug.id],
         'external_bugs': external_bugs})
+
+    if orig_version_tag:
+        version_tag = "[{}]".format(orig_version_tag)
+        if not source_bug.summary.startswith(version_tag):
+            update = bzclient.build_update(
+                summary="{} {}".format(version_tag, source_bug.summary))
+            bzclient.update_bugs([source_bug.id], update)
+
     return newbug
 
 
@@ -139,5 +147,5 @@ if __name__ == "__main__":
     busername, bpassword = get_login(args.bugzilla_user_password, BZ_SERVER)
     bzclient = get_bz_client(busername, bpassword)
 
-    n = clonebug(bzclient, args.bz_id, version="4.8.0")
+    n = clonebug(bzclient, args.bz_id, version="4.8.0", orig_version_tag="4.9")
     print(n.id)
