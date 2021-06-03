@@ -9,6 +9,19 @@ You can install it by running:
 
     pip install git+https://github.com/ronniel1/bztools
 
+If you do not want to manage the virtualenv, you can use [pipx](https://github.com/pypa/pipx):
+
+    sudo dnf install pipx
+
+Then, you can run it with or without installation. Without:
+
+    pipx run --no-cache --spec git+https://github.com/ronniel1/bztools.git bzclone --help
+
+With installation:
+
+    pipx install git+https://github.com/ronniel1/bztools.git
+    bzclone --help
+
 ## Configuration
 
 You can run bztools with either your username & password as well with your bugzilla API key. netrc formatted file.
