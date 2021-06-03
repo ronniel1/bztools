@@ -56,6 +56,7 @@ def clonebug(bzclient, bugid, version=None):
         'platform': source_bug.platform,
         'summary': "[{}] {}".format(target_release, source_bug.summary),
         'description': new_description,
+        'assigned_to': source_bug.assigned_to,
         'comment_is_private': isprivate,
         'priority': source_bug.priority,
         'bug_severity': source_bug.bug_severity,
