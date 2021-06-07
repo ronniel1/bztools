@@ -46,6 +46,7 @@ def clonebug(bzclient, bugid, version=None, orig_version_tag=None):
     if target_release is None:
         target_release = source_bug.target_release
     kwargs = {
+        "reporter": source_bug.reporter,
         "product": source_bug.product,
         "component": source_bug.component,
         "sub_components": source_bug.sub_components,
