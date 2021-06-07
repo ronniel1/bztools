@@ -100,13 +100,19 @@ def clonebug(bzclient, bugid, version=None, orig_version_tag=None):
         {"bug_ids": [newbug.id], "external_bugs": external_bugs}
     )
 
+    update_dict = {}
+    if source_bug.target_release == [target_release]:
+        update_dict.update(bzclient.build_update(target_release=['---']))
+
     if orig_version_tag:
         version_tag = "[{}]".format(orig_version_tag)
         if not source_bug.summary.startswith(version_tag):
-            update = bzclient.build_update(
+            update_dict.update(bzclient.build_update(
                 summary="{} {}".format(version_tag, source_bug.summary)
-            )
-            bzclient.update_bugs([source_bug.id], update)
+            ))
+
+    if len(update_dict) > 0:
+        bzclient.update_bugs([source_bug.id], update_dict)
 
     return newbug
 
