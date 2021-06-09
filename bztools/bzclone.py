@@ -165,7 +165,7 @@ def run():
     busername, bpassword = get_login(args.bugzilla_user_password, BZ_SERVER, args.netrc)
     bzclient = get_bz_client(busername, bpassword)
 
-    n = clonebug(bzclient, args.bz_id, version="4.8.0", orig_version_tag="4.9")
+    n = clonebug(bzclient, args.bz_id, version="4.8.0", orig_version_tag="master")
     print(n.id)
 
 
