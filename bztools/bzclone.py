@@ -69,7 +69,7 @@ def clonebug(bzclient, bugid, version=None, orig_version_tag=None):
         "target_release": target_release,
         "cf_qa_whiteboard": source_bug.qa_whiteboard,
         "cf_clone_of": str(source_bug.id),
-        "cf_devel_whiteboard": source_bug.devel_whiteboard,
+        "cf_devel_whiteboard": "KNI-EDGE-4.9-SHOULD-CLONE",
         "cf_internal_whiteboard": source_bug.internal_whiteboard,
         "cf_build_id": source_bug.cf_build_id,
         "cf_partner": source_bug.cf_partner,
