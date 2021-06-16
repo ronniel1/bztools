@@ -102,7 +102,7 @@ def clonebug(bzclient, bugid, version=None, orig_version_tag=None):
 
     update_dict = {}
     if source_bug.target_release == [target_release]:
-        update_dict.update(bzclient.build_update(target_release=['---']))
+        update_dict.update(bzclient.build_update(target_release=['4.9.0']))
 
     if orig_version_tag:
         version_tag = "[{}]".format(orig_version_tag)
