@@ -42,6 +42,14 @@ netrc username password file example:
       -bup BUGZILLA_USER_PASSWORD, --bugzilla-user-password BUGZILLA_USER_PASSWORD
                             Bugzilla username and password in the format of user:pass
 
+    usage: e2e-auto-verified [-h]
+        [--netrc NETRC | -bup BUGZILLA_USER_PASSWORD | -jup JIRA_USER_PASSWORD]
+        -u URLQUERY
+        [-r {assisted-installer,assisted-service,assisted-installer-agent} [{assisted-installer,assisted-service,assisted-installer-agent} ...]]
+        -t TO_COMMITS [TO_COMMITS ...] [-f FROM_RELATIVE_DATE]
+        [-d] [-i INITIAL_STATUS] [-c CHANGE_STATUS]
+        [-b BZ_OVERRIDE [BZ_OVERRIDE ...]]
+
 ## Development
 
     git clone https://github.com/ronniel1/bztools
