@@ -13,6 +13,9 @@ logging.basicConfig(level=logging.WARN, format="%(levelname)-10s %(message)s")
 logger = logging.getLogger(__name__)
 logging.getLogger("__main__").setLevel(logging.INFO)
 
+TARGET_RELEASE = 'rhacm-2.4'
+NEXT_TARGET_RELEASE = 'rhacm-2.5'
+BACKPORT_LABEL = 'KNI-EDGE-2.4-SHOULD-BACKPORT'
 
 def clonebug(bzclient, bugid, version=None, orig_version_tag=None):
     """Clone this bug similarly as one can do it in the webui"""
@@ -69,7 +72,7 @@ def clonebug(bzclient, bugid, version=None, orig_version_tag=None):
         "target_release": target_release,
         "cf_qa_whiteboard": source_bug.qa_whiteboard,
         "cf_clone_of": str(source_bug.id),
-        "cf_devel_whiteboard": "KNI-EDGE-4.9-SHOULD-CLONE",
+        "cf_devel_whiteboard": BACKPORT_LABEL,
         "cf_internal_whiteboard": source_bug.internal_whiteboard,
         "cf_build_id": source_bug.cf_build_id,
         "cf_partner": source_bug.cf_partner,
@@ -102,7 +105,7 @@ def clonebug(bzclient, bugid, version=None, orig_version_tag=None):
 
     update_dict = {}
     if source_bug.target_release == [target_release]:
-        update_dict.update(bzclient.build_update(target_release=['4.9.0']))
+        update_dict.update(bzclient.build_update(target_release=[NEXT_TARGET_RELEASE]))
 
     if orig_version_tag:
         version_tag = "[{}]".format(orig_version_tag)
@@ -146,7 +149,7 @@ def get_credentials_from_netrc(server, netrc_file=DEFAULT_NETRC_FILE):
 
 def run():
     parser = argparse.ArgumentParser(
-        description="Clone BZ bug and mark the new bug for 4.8.0"
+        description=f"Clone BZ bug and mark the new bug for {TARGET_RELEASE}"
     )
     loginGroup = parser.add_argument_group(title="login options")
     loginArgs = loginGroup.add_mutually_exclusive_group()
@@ -165,7 +168,7 @@ def run():
     busername, bpassword = get_login(args.bugzilla_user_password, BZ_SERVER, args.netrc)
     bzclient = get_bz_client(busername, bpassword)
 
-    n = clonebug(bzclient, args.bz_id, version="4.8.0", orig_version_tag="master")
+    n = clonebug(bzclient, args.bz_id, version=TARGET_RELEASE, orig_version_tag="master")
     print(n.id)
 
 
